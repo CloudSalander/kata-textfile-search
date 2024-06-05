@@ -10,7 +10,7 @@ function cleanText(array $words): array {
 }
 
 function printFirstLetterVowelWords(array $words): void {
-    $pattern = '/[aeiouAEIOU]/';
+    $pattern = '/\b[aeiouAEIOU]\w*/';
     foreach($words as $word) {
         if(preg_match($pattern, $word)) {
             echo $word.PHP_EOL;
