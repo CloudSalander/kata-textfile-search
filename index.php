@@ -18,9 +18,19 @@ function printFirstLetterVowelWords(array $words): void {
     }
 }
 
+function printGivenInitialCharWords(array $words,string $char): void {
+    $pattern = '/\b\w*['.$char.','.strtoupper($char).']\w*\b/i';
+    foreach($words as $word) {
+        if(preg_match($pattern, $word)) {
+            echo $word.PHP_EOL;
+        }
+    }
+}
+
 $file = fopen(FILE,"r");
 $text = fread($file,filesize(FILE));
 $words = explode(" ",$text);
 $clean_words = cleanText($words);
 printFirstLetterVowelWords($clean_words);
+printGivenInitialCharWords($clean_words,"i")
 ?>
