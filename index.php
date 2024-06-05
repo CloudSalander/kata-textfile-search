@@ -9,21 +9,31 @@ function cleanText(array $words): array {
     return $words;
 }
 
-function printFirstLetterVowelWords(array $words): void {
+function filterFirstLetterVowelWords(array $words): array {
     $pattern = '/\b[aeiouAEIOU]\w*/';
+    $filtered_words = [];
     foreach($words as $word) {
         if(preg_match($pattern, $word)) {
-            echo $word.PHP_EOL;
+            if(!in_array($word,$filtered_words)) $filtered_words[] = $word;
         }
     }
+    return $filtered_words;
 }
 
-function printGivenInitialCharWords(array $words,string $char): void {
+function filterGivenInitialCharWords(array $words,string $char): array {
     $pattern = '/\b\w*['.$char.','.strtoupper($char).']\w*\b/i';
+    $filtered_words = [];
     foreach($words as $word) {
         if(preg_match($pattern, $word)) {
-            echo $word.PHP_EOL;
+            if(!in_array($word,$filtered_words)) $filtered_words[] = $word;
         }
+    }
+    return $filtered_words;
+}
+
+function printFilteredWords(array $filtered_words): void {
+    foreach($filtered_words as $word) {
+        echo $word.PHP_EOL;
     }
 }
 
@@ -31,6 +41,8 @@ $file = fopen(FILE,"r");
 $text = fread($file,filesize(FILE));
 $words = explode(" ",$text);
 $clean_words = cleanText($words);
-printFirstLetterVowelWords($clean_words);
-printGivenInitialCharWords($clean_words,"i")
+$vowel_words = filterFirstLetterVowelWords($clean_words);
+$t_words = filterGivenInitialCharWords($clean_words,"t");
+
+printFilteredWords($t_words);
 ?>
